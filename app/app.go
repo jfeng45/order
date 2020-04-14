@@ -49,7 +49,6 @@ func initContainer() (container.Container, error) {
 	c.Put(container.EVENT_BUS, eb)
 	loadEventHandler(c)
 	return &c, nil
-	//return &container, nil
 }
 
 func initLogger () error{
@@ -94,7 +93,7 @@ func loadEventHandler(c servicecontainer.ServiceContainer) error {
 	pceh := event.PaymentCreatedEventHandler{rluf}
 	if value, found = c.Get(container.EVENT_BUS); !found {
 		//logger.Log.Debug("find CacheGrpc key=%v \n", key)
-		message := "can't find key= in containier " + container.EVENT_BUS
+		message := "can't find key=" + container.EVENT_BUS + " in container "
 		return errors.New(message)
 	}
 	eb := value.(ycq.EventBus)

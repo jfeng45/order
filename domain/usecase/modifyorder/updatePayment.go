@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-func (mpu *ModifyOrderUseCase) MakePayment( orderNumber string, paymentId int,status string ) error {
-	numberOfUpdate, err := mpu.OrderDataInterface.CreatePayment(orderNumber, paymentId, status)
+func (mpu *ModifyOrderUseCase) UpdatePayment( orderNumber string, paymentId int,status string ) error {
+	numberOfUpdate, err := mpu.OrderDataInterface.UpdatePayment(orderNumber, paymentId, status)
 	if err!= nil {
 		return errors.Wrap(err, "")
 	}

@@ -20,7 +20,7 @@ func (mpu *ModifyOrderUseCase) CreateOrder (order *model.Order ) (*model.Order ,
 		return nil, errors.Wrap(err, "")
 
 	}
-	//Using a new MakePayment command to create payment for this order, the command will be sent to payment service
+	//Using a new UpdatePayment command to create payment for this order, the command will be sent to payment service
 	mpc := command.NewMakePaymentCommand(order.P)
 	err = mpu.Mi.Publish(config.SUBJECT_MAKE_PAYMENT, mpc)
 	if err != nil {

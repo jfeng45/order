@@ -8,14 +8,14 @@ import (
 )
 
 type PaymentCreatedEventHandler struct {
-	Uouc usecase.ModifyOrderUseCaseInterface
+	Mouc usecase.ModifyOrderUseCaseInterface
 }
 func(pc PaymentCreatedEventHandler) Handle (message ycq.EventMessage) {
 	switch event := message.Event().(type) {
 
 	case *PaymentCreatedEvent:
-		status := model.PAYMENT_STATUS_COMPLETED
-		err := pc.Uouc.MakePayment(event.OrderNumber, event.Id,status)
+		status := model.ORDER_STATUS_PAID
+		err := pc.Mouc.UpdatePayment(event.OrderNumber, event.Id,status)
 		if err != nil {
 			logger.Log.Errorf("error in PaymentCreatedEventHandler:", err)
 		}

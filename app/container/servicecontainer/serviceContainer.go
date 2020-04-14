@@ -1,10 +1,10 @@
 package servicecontainer
 
 import (
+	"github.com/jfeng45/gmessaging"
 	"github.com/jfeng45/order/app/container"
 	"github.com/jfeng45/order/app/logger"
 	"github.com/jfeng45/order/applicationservice/dataservice/orderdata/sqldb"
-	"github.com/jfeng45/gmessaging"
 	"github.com/jfeng45/order/domain/usecase/modifyorder"
 	"github.com/jfeng45/order/domain/usecase/searchorder"
 	"github.com/jfeng45/order/tool/gdbc"
@@ -20,22 +20,15 @@ func (sc *ServiceContainer) BuildUseCase(code string) (interface{}, error) {
 	var found bool
 	if value, found = sc.Get(container.DATABASE); !found {
 		//logger.Log.Debug("find CacheGrpc key=%v \n", key)
-		message := "can't find key= in containier " + container.DATABASE
+		message := "can't find key= " + container.DATABASE + " in container "
 		return nil, errors.New(message)
 	}
 	dt := value.(gdbc.SqlGdbc)
 	pds := sqldb.OrderDataSql{dt}
 
-	//if value, found = sc.Get(container.EVENT_BUS); !found {
-	//	//logger.Log.Debug("find CacheGrpc key=%v \n", key)
-	//	message := "can't find key= in containier " + container.EVENT_BUS
-	//	return nil, errors.New(message)
-	//}
-	//eb := value.(ycq.EventBus)
-
 	if value, found = sc.Get(container.MESSAGING_SERVER); !found {
 		//logger.Log.Debug("find CacheGrpc key=%v \n", key)
-		message := "can't find key= in containier " + container.MESSAGING_SERVER
+		message := "can't find key=" + container.MESSAGING_SERVER + " in container "
 		return nil, errors.New(message)
 	}
 	ms := value.(gmessaging.MessagingInterface)
@@ -50,7 +43,7 @@ func (sc *ServiceContainer) BuildUseCase(code string) (interface{}, error) {
 			logger.Log.Debug("found usecase in container for key:", code)
 			return &uc, nil
 	    default:
-	    	message := "can't find key= in containier " + code
+	    	message := "can't find key=" + code + " in container "
 			return nil, errors.New(message)
 		}
 	return nil, nil

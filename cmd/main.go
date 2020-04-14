@@ -2,15 +2,15 @@ package main
 
 import (
 	ycq "github.com/jetbasrawi/go.cqrs"
+	"github.com/jfeng45/gmessaging"
 	"github.com/jfeng45/order/app"
 	"github.com/jfeng45/order/app/config"
 	"github.com/jfeng45/order/app/container"
 	"github.com/jfeng45/order/app/container/containerhelper"
 	"github.com/jfeng45/order/app/logger"
-	"github.com/jfeng45/gmessaging"
 	"github.com/jfeng45/order/domain/event"
 	"github.com/jfeng45/order/domain/model"
-	"github.com/jfeng45/order/tool"
+	"github.com/jfeng45/order/tool/timea"
 	"log"
 	"runtime"
 	"time"
@@ -21,10 +21,10 @@ func main() {
 	if err != nil {
 		log.Println("err:", err)
 	}
-	//go testSubscribe(c)
-	//time.Sleep(1000)
+	go testSubscribe(c)
+	time.Sleep(1000)
 	testMySql(c)
-	//runtime.Goexit()
+	runtime.Goexit()
 }
 
 func testSubscribe(c container.Container) {
@@ -55,7 +55,7 @@ func testSubscribe(c container.Container) {
 
 func testMySql(c container.Container) {
 	//testGetOrder(c)
-	//testMakePayment(c)
+	//testUpdatePayment(c)
 	testCreateOrder(c)
 }
 
@@ -73,12 +73,12 @@ func testGetOrder(c container.Container) {
 
 }
 
-func testMakePayment(c container.Container) {
+func testUpdatePayment(c container.Container) {
 	uouc, err := containerhelper.BuildModifyOrderUseCase(c)
 	if err != nil {
 		logger.Log.Fatalf("UpdateOrderUseCase interface build failed:%+v\n", err)
 	}
-	err = uouc.MakePayment("2", 222, "created2")
+	err = uouc.UpdatePayment("2", 222, "created2")
 	if err != nil {
 		logger.Log.Errorf("UpdateOrderUseCase failed failed:%+v\n", err)
 	}
@@ -90,14 +90,15 @@ func testCreateOrder(c container.Container) {
 	if err != nil {
 		logger.Log.Fatalf("createOrderUseCase interface build failed:%+v\n", err)
 	}
-	created, err := time.Parse(tool.FORMAT_ISO8601_DATE_TIME, "2020-02-09 15:04:05")
-	updated, err := time.Parse(tool.FORMAT_ISO8601_DATE, "2020-02-17 15:04:05")
+	created, err := time.Parse(timea.FORMAT_ISO8601_DATE_TIME, "2020-02-09 15:04:05")
+	updated, err := time.Parse(timea.FORMAT_ISO8601_DATE, "2020-02-17 15:04:05")
 	var completed time.Time
+	orderNumber := "4"
 	p := model.Payment{0,2,22,22,
-		model.PAYMENT_STATUS_UNCOMPLETED,model.PAYMENT_METHOD_ALIPAY,"1", time.Now(),
+		model.PAYMENT_STATUS_UNCOMPLETED,model.PAYMENT_METHOD_ALIPAY,orderNumber, time.Now(),
 		completed}
 	var id int
-	o := model.Order{id,"3",1,p,
+	o := model.Order{id,orderNumber,1,p,
 		model.ORDER_STATUS_UNPAID, created, updated}
 	order, err := mouc.CreateOrder(&o)
 	if err != nil {

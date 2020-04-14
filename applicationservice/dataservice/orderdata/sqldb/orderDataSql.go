@@ -2,14 +2,14 @@
 package sqldb
 
 import (
-"database/sql" 
-_ "github.com/go-sql-driver/mysql"
-"github.com/jfeng45/order/app/logger"
-"github.com/jfeng45/order/domain/model"
-"github.com/jfeng45/order/tool"
-"github.com/jfeng45/order/tool/gdbc"
-"github.com/pkg/errors"
-"time"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jfeng45/order/app/logger"
+	"github.com/jfeng45/order/domain/model"
+	"github.com/jfeng45/order/tool/gdbc"
+	"github.com/jfeng45/order/tool/timea"
+	"github.com/pkg/errors"
+	"time"
 )
 
 const (
@@ -70,9 +70,11 @@ func rowsToOrder(rows *sql.Rows) (*model.Order, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "")
 	}
-	createdTime, err := time.Parse(tool.FORMAT_ISO8601_DATE_TIME, ct)
-	updatedTime, err := time.Parse(tool.FORMAT_ISO8601_DATE_TIME, ut)
-
+	createdTime, err := timea.Parse(timea.FORMAT_ISO8601_DATE_TIME, ct)
+	if err != nil {
+		return nil, errors.Wrap(err, "")
+	}
+	updatedTime, err := timea.Parse(timea.FORMAT_ISO8601_DATE_TIME, ut)
 	if err != nil {
 		return nil, errors.Wrap(err, "")
 	}
@@ -117,7 +119,7 @@ func (ods *OrderDataSql) FindAll() ([]model.Order, error) {
 	return users, nil
 }
 
-func (ods *OrderDataSql) CreatePayment( orderNumber string, paymentId int,status string ) (int64, error) {
+func (ods *OrderDataSql) UpdatePayment( orderNumber string, paymentId int,status string ) (int64, error) {
 
 	stmt, err := ods.DB.Prepare(CREATE_PAYMENT)
 
@@ -134,7 +136,7 @@ func (ods *OrderDataSql) CreatePayment( orderNumber string, paymentId int,status
 	if err != nil {
 		return 0, errors.Wrap(err, "")
 	}
-	logger.Log.Debug("MakePayment: rows affected: ", rowsAffected)
+	logger.Log.Debug("UpdatePayment: rows affected: ", rowsAffected)
 
 	return rowsAffected, nil
 }
@@ -160,6 +162,3 @@ func (ods *OrderDataSql) Insert(o *model.Order) (*model.Order, error) {
 	return o, nil
 }
 
-//func (uds *OrderDataSql) EnableTx(tx dataservice.TxDataInterface) {
-//	uds.DB = tx.GetTx()
-//}

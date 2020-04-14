@@ -8,7 +8,7 @@ const (
 	LOG_ENABLE_CALLER    bool   = true
 
 	DB_DRIVER_NAME       string = "mysql"
-	DB_SOURCE_NAME       string ="root:@tcp(localhost:4333)/fasp?charset=utf8"
+	DB_SOURCE_NAME       string ="root:@tcp(localhost:4333)/service_config?charset=utf8"
 
 	MESSAGING_SERVER_URL string = nats.DefaultURL
 

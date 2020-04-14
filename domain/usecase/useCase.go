@@ -7,6 +7,6 @@ type SearchOrderUseCaseInterface interface {
 }
 
 type ModifyOrderUseCaseInterface interface {
-	MakePayment(orderNumber string, paymentId int, status string) error
+	UpdatePayment(orderNumber string, paymentId int, status string) error
 	CreateOrder(order *model.Order) (*model.Order, error)
 }
