@@ -17,10 +17,10 @@ type MakePaymentCommand struct {
 	CompletionTime time.Time
 }
 
-func NewMakePaymentCommand(p model.Payment) MakePaymentCommand{
+func NewMakePaymentCommand(p *model.Payment) *MakePaymentCommand{
 	pc := MakePaymentCommand{p.Id,p.SourceAccount,p.TargetAccount, p.Amount,
 		p.Status, p.PaymentMethod, p.OrderNumber, p.CreatedTime,
 		p.CompletionTime}
-	return pc
+	return &pc
 }
 

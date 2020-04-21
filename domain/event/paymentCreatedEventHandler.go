@@ -10,7 +10,7 @@ import (
 type PaymentCreatedEventHandler struct {
 	Mouc usecase.ModifyOrderUseCaseInterface
 }
-func(pc PaymentCreatedEventHandler) Handle (message ycq.EventMessage) {
+func(pc *PaymentCreatedEventHandler) Handle (message ycq.EventMessage) {
 	switch event := message.Event().(type) {
 
 	case *PaymentCreatedEvent:

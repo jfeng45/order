@@ -35,7 +35,7 @@ func InitApp(filename...string) (container.Container, error) {
 func initContainer() (container.Container, error) {
 	factoryMap := make(map[string]interface{})
 	c := servicecontainer.ServiceContainer{factoryMap}
-	gdbc, err :=initGdbc(&c)
+	gdbc, err :=initGdbc()
 	if err != nil {
 		return nil,err
 	}
@@ -47,7 +47,7 @@ func initContainer() (container.Container, error) {
 	c.Put(container.MESSAGING_SERVER, ec)
 	eb := initEventBus()
 	c.Put(container.EVENT_BUS, eb)
-	loadEventHandler(c)
+	loadEventHandler(&c)
 	return &c, nil
 }
 
@@ -61,7 +61,7 @@ func initLogger () error{
 	return nil
 }
 
-func initGdbc(sc *servicecontainer.ServiceContainer) (gdbc.SqlGdbc,error) {
+func initGdbc() (gdbc.SqlGdbc,error) {
 
 	db, err := sql.Open(config.DB_DRIVER_NAME, config.DB_SOURCE_NAME)
 	if err != nil {
@@ -82,11 +82,11 @@ func initEventBus() ycq.EventBus {
 	return eventBus
 }
 
-func loadEventHandler(c servicecontainer.ServiceContainer) error {
+func loadEventHandler(c container.Container) error {
 	var value interface{}
 	var found bool
 
-	rluf, err := containerhelper.BuildModifyOrderUseCase(&c)
+	rluf, err := containerhelper.BuildModifyOrderUseCase(c)
 	if err != nil {
 		return err
 	}
@@ -97,7 +97,7 @@ func loadEventHandler(c servicecontainer.ServiceContainer) error {
 		return errors.New(message)
 	}
 	eb := value.(ycq.EventBus)
-	eb.AddHandler(pceh,&event.PaymentCreatedEvent{})
+	eb.AddHandler(&pceh,&event.PaymentCreatedEvent{})
 	return nil
 }
 func initMessagingService() (gmessaging.MessagingInterface, error) {
@@ -112,6 +112,6 @@ func initMessagingService() (gmessaging.MessagingInterface, error) {
 		return nil, err
 	}
 	n := nat.Nat{ec}
-	return n, nil
+	return &n, nil
 	//defer ec.Close()
 }
