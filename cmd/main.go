@@ -90,7 +90,7 @@ func testCreateOrder(c container.Container) {
 	if err != nil {
 		logger.Log.Fatalf("createOrderUseCase interface build failed:%+v\n", err)
 	}
-	created, err := time.Parse(timea.FORMAT_ISO8601_DATE_TIME, "2020-02-09 15:04:05")
+	created, err := time.Parse(timea.FORMAT_ISO8601_DATE_TIME, "2020-05-09 15:04:05")
 	updated, err := time.Parse(timea.FORMAT_ISO8601_DATE, "2020-02-17 15:04:05")
 	var completed time.Time
 	orderNumber := "4"

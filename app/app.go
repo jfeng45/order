@@ -5,7 +5,8 @@ import (
 	ycq "github.com/jetbasrawi/go.cqrs"
 	"github.com/jfeng45/glogger"
 	"github.com/jfeng45/gmessaging"
-	"github.com/jfeng45/gmessaging/nat"
+	gmessagingConfig "github.com/jfeng45/gmessaging/config"
+	gmessagingFactory "github.com/jfeng45/gmessaging/factory"
 	"github.com/jfeng45/order/app/config"
 	"github.com/jfeng45/order/app/container"
 	"github.com/jfeng45/order/app/container/containerhelper"
@@ -16,7 +17,6 @@ import (
 	"github.com/jfeng45/order/tool/gdbc/databasehandler"
 	"github.com/nats-io/nats.go"
 	"github.com/pkg/errors"
-	"log"
 )
 
 // InitApp initialize the application container and load resources like JDBC, Messaging server and so on.
@@ -100,18 +100,23 @@ func loadEventHandler(c container.Container) error {
 	eb.AddHandler(&pceh,&event.PaymentCreatedEvent{})
 	return nil
 }
+//func initMessagingService() (gmessaging.MessagingInterface, error) {
+//	url := config.MESSAGING_SERVER_URL
+//	nc, err :=nats.Connect(url)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	//defer nc.Close()
+//	ec, err := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
+//	if err != nil {
+//		return nil, err
+//	}
+//	n := nat.Nat{ec}
+//	return &n, nil
+//	//defer ec.Close()
+//}
+
 func initMessagingService() (gmessaging.MessagingInterface, error) {
-	url := config.MESSAGING_SERVER_URL
-	nc, err :=nats.Connect(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	//defer nc.Close()
-	ec, err := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
-	if err != nil {
-		return nil, err
-	}
-	n := nat.Nat{ec}
-	return &n, nil
-	//defer ec.Close()
+	config := gmessagingConfig.Messaging{gmessagingConfig.NATS_ENCODED, config.MESSAGING_SERVER_URL, nats.JSON_ENCODER}
+	return gmessagingFactory.Build(&config)
 }

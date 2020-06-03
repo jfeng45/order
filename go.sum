@@ -32,6 +32,8 @@ github.com/jfeng45/glogger v0.0.0-20200220062829-f54c4f37fa86 h1:ws6Ad5sx9GZ+j5i
 github.com/jfeng45/glogger v0.0.0-20200220062829-f54c4f37fa86/go.mod h1:sf7BgRKEE81JPwRPpmXBmy04V2QEBahAvEi9jrV98vw=
 github.com/jfeng45/gmessaging v0.0.0-20200411014532-6252e3a03aed h1:7hJYfu+EFP81VcBdM5EpHMooPE54n0lf16mtcS0auFw=
 github.com/jfeng45/gmessaging v0.0.0-20200411014532-6252e3a03aed/go.mod h1:MbzXj7yf7gtDXsZLZPFeY4mGS9B6xHIklvpmaYmWZX0=
+github.com/jfeng45/gmessaging v0.0.0-20200603065153-90ad88afde61 h1:ffdP/G9ut2SkiAvqkGM2aYLQ9WIXrhHwafOHL6qvYPY=
+github.com/jfeng45/gmessaging v0.0.0-20200603065153-90ad88afde61/go.mod h1:MbzXj7yf7gtDXsZLZPFeY4mGS9B6xHIklvpmaYmWZX0=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1 h1:mweAR1A6xJ3oS2pRaGiHgQ4OO8tzTaLawm8vnODuwDk=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=

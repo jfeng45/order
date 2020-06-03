@@ -8,7 +8,7 @@ require (
 	github.com/jetbasrawi/go.geteventstore v1.0.0 // indirect
 	github.com/jetbasrawi/go.geteventstore.testfeed v0.0.0-20160808110805-4e3be493c211 // indirect
 	github.com/jfeng45/glogger v0.0.0-20200220062829-f54c4f37fa86
-	github.com/jfeng45/gmessaging v0.0.0-20200411014532-6252e3a03aed
+	github.com/jfeng45/gmessaging v0.0.0-20200603065153-90ad88afde61
 	github.com/nats-io/nats-server/v2 v2.1.4 // indirect
 	github.com/nats-io/nats.go v1.9.2
 	github.com/pkg/errors v0.9.1
