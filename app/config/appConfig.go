@@ -3,8 +3,6 @@ package config
 import "github.com/nats-io/nats.go"
 
 const (
-	LOG_CODE             string = "zap"
-	LOG_LEVEL            string = "debug"
 	LOG_ENABLE_CALLER    bool   = true
 
 	DB_DRIVER_NAME       string = "mysql"

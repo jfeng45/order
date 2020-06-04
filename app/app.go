@@ -3,7 +3,8 @@ package app
 import (
 	"database/sql"
 	ycq "github.com/jetbasrawi/go.cqrs"
-	"github.com/jfeng45/glogger"
+	logConfig "github.com/jfeng45/glogger/config"
+	logFactory "github.com/jfeng45/glogger/factory"
 	"github.com/jfeng45/gmessaging"
 	gmessagingConfig "github.com/jfeng45/gmessaging/config"
 	gmessagingFactory "github.com/jfeng45/gmessaging/factory"
@@ -52,8 +53,8 @@ func initContainer() (container.Container, error) {
 }
 
 func initLogger () error{
-	lc := glogger.LogConfig{config.LOG_CODE, config.LOG_LEVEL, config.LOG_ENABLE_CALLER}
-	log, err := glogger.InitLogger(lc)
+	lc := logConfig.Logging{logConfig.ZAP, logConfig.DEBUG, config.LOG_ENABLE_CALLER}
+	log, err := logFactory.Build(&lc)
 	if err != nil {
 		return errors.Wrap(err, "loadLogger")
 	}
