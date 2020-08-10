@@ -31,7 +31,7 @@ func (sc *ServiceContainer) BuildUseCase(code string) (interface{}, error) {
 		message := "can't find key=" + container.MESSAGING_SERVER + " in container "
 		return nil, errors.New(message)
 	}
-	ms := value.(gmessaging.MessagingInterface)
+	ms := value.(gmessaging.MessagingEncodedInterface)
 
 	switch code {
 		case container.SEARCH_ORDER_USECASE:

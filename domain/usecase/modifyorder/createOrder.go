@@ -11,7 +11,7 @@ import (
 
 type ModifyOrderUseCase struct {
 	OrderDataInterface dataservice.OrderDataInterface
-	Mi           gmessaging.MessagingInterface
+	Mi           gmessaging.MessagingEncodedInterface
 }
 
 func (mpu *ModifyOrderUseCase) CreateOrder (order *model.Order ) (*model.Order , error) {

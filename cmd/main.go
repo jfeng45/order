@@ -34,7 +34,7 @@ func testSubscribe(c container.Container) {
 		message := "can't find key= " + container.MESSAGING_SERVER +" in container "
 		logger.Log.Errorf(message)
 	}
-	ms := value.(gmessaging.MessagingInterface)
+	ms := value.(gmessaging.MessagingEncodedInterface)
 	if value, found = c.Get(container.EVENT_BUS); !found {
 		message := "can't find key=" + container.EVENT_BUS + " in container "
 		logger.Log.Errorf("err:",message)
